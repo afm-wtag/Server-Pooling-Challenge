@@ -19,3 +19,13 @@ node index.mjs
 ```sh
 http://localhost:6969/blocking-get?key=any
 ```
+## Postman
+```sh
+http://localhost:6969/push?key=any
+```
+JSON data:
+```sh
+{
+    data: "Hello World!"
+}
+```

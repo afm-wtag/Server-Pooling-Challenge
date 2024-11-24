@@ -36,4 +36,14 @@ export async function blockingGet(key) {
     });
 }
 
-export async function push(key, data) {}
+export async function push(key, data) {
+    if (pendingClientReq.has(key) && pendingClientReq.get(key).length > 0) {
+      const request = pendingClientReq.get(key);
+      const firstReq = request.shift(); // removing the first client
+      clearTimeout(firstReq.timeout);
+      firstReq.resolver(data);
+      if (request.length === 0) pendingClientReq.delete(key);
+    } else {
+      dataStore.set(key, data);
+    }
+}
